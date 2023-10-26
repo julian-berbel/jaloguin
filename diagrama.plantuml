@@ -1,0 +1,128 @@
+@startuml
+abstract class Asustador {
+  intentarAsustarA(unAdulto)
+  {abstract} capacidadDeAsustar()
+  {abstract} cantidadDeCaramelos()
+  {abstract} recibirCaramelos()
+}
+
+class Ninio extends Asustador {
+  actitud
+  elementosQueLlevaPuestos
+  cantidadDeCaramelos
+  estadoDeSalud
+
+  capacidadDeAsustar()
+  intentarAsustarA(unAdulto)
+  tieneMuchosCaramelos()
+  tieneVariosCaramelos()
+  tieneMasDeNCaramelos(unaCantidad)
+  recibirCaramelos(unaCantidad)
+  cantidadDeCaramelos()
+  comerCaramelos(unaCantidad)
+  actitud()
+  empeorar()
+}
+
+object jaloguin {
+  cuantoAsustanLosMaquillajes
+  --
+  crearLegionDeTerror(miembros)
+}
+
+class Maquillaje {
+  sustoQueGenera()
+}
+
+class TrajeTierno {
+  sustoQueGenera()
+}
+
+class TrajeTerrorifico {
+  sustoQueGenera()
+}
+
+class AdultoComun {
+  cantidadDeNiniosConMuchosCaramelosQueIntentaronAsustarlo
+
+  leAsusta(unAsustador)
+  cuantosCaramelosDa()
+  tolerancia()
+  intentarSerAsustadoPorNinioConMuchosCaramelos()
+  recibirSusto(unAsustador)
+}
+
+class Abuelo extends AdultoComun {
+  leAsusta(unAsustador)
+  cuantosCaramelosDa()
+}
+
+class AdultoNecio extends AdultoComun {
+  leAsusta(unAsustador)
+}
+
+class LegionDeTerror extends Asustador {
+  miembros
+
+  capacidadDeAsustar()
+  cantidadDeCaramelos()
+  recibirCaramelos(unaCantidad)
+  lider()
+}
+
+class Barrio {
+  ninios
+
+  top3DeCuantosCaramelosTienen()
+  elementosDeNiniosConVariosCaramelos()
+}
+
+abstract class EstadoDeSaludActivo implements EstadoDeSalud {
+  comerCaramelos(unNinio, unaCantidad)
+  sonMuchosCaramelos(unaCantidad)
+  actitud(unNinio)
+  {abstract} peor()
+}
+
+object sano {
+  --
+  peor()
+}
+
+object empachado {
+  --
+  peor()
+  actitud()
+}
+
+object enCama {
+  --
+  comerCaramelos(unNinio, unaCantidad)
+  actitud()
+  peor()
+}
+
+interface ElementoDeDisfraz {
+  sustoQueGenera()
+}
+
+interface EstadoDeSalud {
+  actitud(unNinio)
+  comerCaramelos(unaCantidad, unNinio)
+  {abstract} peor()
+}
+
+sano -u-|> EstadoDeSaludActivo
+empachado -u-|> EstadoDeSaludActivo
+Asustador .r.> AdultoComun
+LegionDeTerror -u-> "*" Asustador : miembros
+Maquillaje .u.|> ElementoDeDisfraz
+TrajeTierno .u.|> ElementoDeDisfraz
+TrajeTerrorifico .u.|> ElementoDeDisfraz
+Barrio -d-> "*" Ninio : ninios
+Ninio --> "*" ElementoDeDisfraz : elementosQueLlevaPuestos
+Ninio -r-> EstadoDeSalud
+enCama .u.|> EstadoDeSalud
+Maquillaje ..> jaloguin
+jaloguin .u.> LegionDeTerror
+@enduml
